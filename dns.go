@@ -6,17 +6,17 @@ package main
 
 import (
 	"fmt"
-	"github.com/kaspanet/kaspad/app/appmessage"
+	"github.com/karlsen-network/karlsend/app/appmessage"
 	"net"
 	"os"
 	"strings"
 	"sync/atomic"
 	"time"
 
-	"github.com/kaspanet/kaspad/domain/consensus/model/externalapi"
-	"github.com/kaspanet/kaspad/domain/consensus/utils/subnetworks"
+	"github.com/karlsen-network/karlsend/domain/consensus/model/externalapi"
+	"github.com/karlsen-network/karlsend/domain/consensus/utils/subnetworks"
 
-	"github.com/kaspanet/kaspad/infrastructure/network/dnsseed"
+	"github.com/karlsen-network/karlsend/infrastructure/network/dnsseed"
 	"github.com/pkg/errors"
 
 	"github.com/miekg/dns"
