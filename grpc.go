@@ -5,11 +5,11 @@ import (
 	"fmt"
 	"net"
 
-	"github.com/kaspanet/kaspad/domain/consensus/model/externalapi"
-	"github.com/kaspanet/kaspad/domain/consensus/utils/subnetworks"
+	"github.com/karlsen-network/karlsend/domain/consensus/model/externalapi"
+	"github.com/karlsen-network/karlsend/domain/consensus/utils/subnetworks"
 
-	"github.com/kaspanet/kaspad/app/appmessage"
-	"github.com/kaspanet/kaspad/infrastructure/network/dnsseed/pb"
+	"github.com/karlsen-network/karlsend/app/appmessage"
+	"github.com/karlsen-network/karlsend/infrastructure/network/dnsseed/pb"
 	"github.com/miekg/dns"
 	"github.com/pkg/errors"
 	"google.golang.org/grpc"
