@@ -1,10 +1,10 @@
-module github.com/kaspanet/dnsseeder
+module github.com/karlsen-network/dnsseeder
 
 go 1.18
 
 require (
 	github.com/jessevdk/go-flags v1.4.0
-	github.com/kaspanet/kaspad v0.12.7
+	github.com/karlsen-network/karlsend v0.12.7
 	github.com/miekg/dns v1.1.25
 	github.com/pkg/errors v0.9.1
 	google.golang.org/grpc v1.53.0
