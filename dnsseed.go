@@ -14,19 +14,19 @@ import (
 	"sync/atomic"
 	"time"
 
-	"github.com/kaspanet/kaspad/app/protocol/common"
-	"github.com/kaspanet/kaspad/infrastructure/config"
-	"github.com/kaspanet/kaspad/infrastructure/network/netadapter/standalone"
+	"github.com/karlsen-network/karlsend/app/protocol/common"
+	"github.com/karlsen-network/karlsend/infrastructure/config"
+	"github.com/karlsen-network/karlsend/infrastructure/network/netadapter/standalone"
 
 	"github.com/pkg/errors"
 
-	"github.com/kaspanet/dnsseeder/version"
-	"github.com/kaspanet/kaspad/infrastructure/network/dnsseed"
-	"github.com/kaspanet/kaspad/util/panics"
-	"github.com/kaspanet/kaspad/util/profiling"
+	"github.com/karlsen-network/dnsseeder/version"
+	"github.com/karlsen-network/karlsend/infrastructure/network/dnsseed"
+	"github.com/karlsen-network/karlsend/util/panics"
+	"github.com/karlsen-network/karlsend/util/profiling"
 
-	"github.com/kaspanet/kaspad/app/appmessage"
-	"github.com/kaspanet/kaspad/infrastructure/os/signal"
+	"github.com/karlsen-network/karlsend/app/appmessage"
+	"github.com/karlsen-network/karlsend/infrastructure/os/signal"
 
 	_ "net/http/pprof"
 )
