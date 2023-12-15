@@ -20,7 +20,7 @@ import (
 	"github.com/pkg/errors"
 )
 
-// Node repesents a node in the Kaspa network
+// Node repesents a node in the Karlsen network
 type Node struct {
 	Addr         *appmessage.NetAddress
 	LastAttempt  time.Time
