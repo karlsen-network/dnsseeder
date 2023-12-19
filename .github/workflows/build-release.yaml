@@ -1,0 +1,113 @@
+name: Build and upload assets
+on:
+  release:
+    types: [ published ]
+
+jobs:
+  build:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ ubuntu-latest, macos-latest ]
+    name: Building, ${{ matrix.os }}
+    steps:
+      - name: Check out code into the Go module directory
+        uses: actions/checkout@v2
+
+      - name: Setup Go
+        uses: actions/setup-go@v2
+        with:
+          go-version: 1.20.12
+
+      - name: Update sources
+        if: runner.os == 'Linux'
+        run: sudo apt-get update -y
+
+      - name: Install compilers
+        if: runner.os == 'Linux'
+        run: sudo apt-get install gcc-aarch64-linux-gnu gcc-mingw-w64-x86-64-win32 -y
+
+      - name: Build on Linux for x86_64
+        if: runner.os == 'Linux'
+        run: |
+
+          # `-extldflags=-static` - means static link everything,
+          # `-tags netgo,osusergo` means use pure go replacements for "os/user" and "net"
+          # `-s -w` strips the binary to produce smaller size binaries
+          go build -v -ldflags="-s -w -extldflags=-static" -tags netgo,osusergo -o ./bin/ .
+          archive="bin/dnsseeder-${{ github.event.release.tag_name }}-linux-x86_64.zip"
+          asset_name="dnsseeder-${{ github.event.release.tag_name }}-linux-x86_64.zip"
+          zip -r "${archive}" ./bin/*
+          echo "archive=${archive}" >> $GITHUB_ENV
+          echo "asset_name=${asset_name}" >> $GITHUB_ENV
+
+          # cleanup for next run.
+          rm -r ./bin
+
+      - name: Build on Linux for aarch64
+        if: runner.os == 'Linux'
+        env:
+          CGO_ENABLED: 1
+          CC: aarch64-linux-gnu-gcc
+          GOOS: linux
+          GOARCH: arm64
+        run: |
+
+          # `-extldflags=-static` - means static link everything,
+          # `-tags netgo,osusergo` means use pure go replacements for "os/user" and "net"
+          # `-s -w` strips the binary to produce smaller size binaries
+          go build -v -ldflags="-s -w -extldflags=-static" -tags netgo,osusergo -o ./bin/ .
+          archive="bin/dnsseeder-${{ github.event.release.tag_name }}-linux-aarch64.zip"
+          asset_name="dnsseeder-${{ github.event.release.tag_name }}-linux-aarch64.zip"
+          zip -r "${archive}" ./bin/*
+          echo "archive=${archive}" >> $GITHUB_ENV
+          echo "asset_name=${asset_name}" >> $GITHUB_ENV
+
+          # cleanup for next run.
+          rm -r ./bin
+
+      - name: Build on Linux for win64
+        if: runner.os == 'Linux'
+        env:
+          CGO_ENABLED: 1
+          CC: x86_64-w64-mingw32-gcc
+          GOOS: windows
+          GOARCH: amd64
+        run: |
+
+          # `-extldflags=-static` - means static link everything,
+          # `-tags netgo,osusergo` means use pure go replacements for "os/user" and "net"
+          # `-s -w` strips the binary to produce smaller size binaries
+          go build -v -ldflags="-s -w -extldflags=-static" -tags netgo,osusergo -o ./bin/ .
+          archive="bin/dnsseeder-${{ github.event.release.tag_name }}-windows-x64.zip"
+          asset_name="dnsseeder-${{ github.event.release.tag_name }}-windows-x64.zip"
+          zip -r "${archive}" ./bin/*
+          echo "archive=${archive}" >> $GITHUB_ENV
+          echo "asset_name=${asset_name}" >> $GITHUB_ENV
+
+          # cleanup for next run.
+          rm -r ./bin
+
+      - name: Build on MacOS
+        if: runner.os == 'macOS'
+        run: |
+          go build -v -ldflags="-s -w" -o ./bin/ .
+          archive="bin/karlsen-paper-${{ github.event.release.tag_name }}-osx.zip"
+          asset_name="karlsen-paper-${{ github.event.release.tag_name }}-osx.zip"
+          zip -r "${archive}" ./bin/*
+          echo "archive=${archive}" >> $GITHUB_ENV
+          echo "asset_name=${asset_name}" >> $GITHUB_ENV
+
+          # cleanup for next run.
+          rm -r ./bin
+
+      - name: Upload release asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ github.event.release.upload_url }}
+          asset_path: "./${{ env.archive }}"
+          asset_name: "${{ env.asset_name }}"
+          asset_content_type: application/zip
