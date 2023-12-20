@@ -4,7 +4,7 @@ go 1.18
 
 require (
 	github.com/jessevdk/go-flags v1.4.0
-	github.com/karlsen-network/karlsend v0.0.1
+	github.com/karlsen-network/karlsend v1.0.0
 	github.com/miekg/dns v1.1.25
 	github.com/pkg/errors v0.9.1
 	google.golang.org/grpc v1.53.0
@@ -16,10 +16,12 @@ require (
 	github.com/golang/protobuf v1.5.2 // indirect
 	github.com/jrick/logrotate v1.0.0 // indirect
 	github.com/kaspanet/go-muhash v0.0.4 // indirect
+	github.com/klauspost/cpuid/v2 v2.0.9 // indirect
 	golang.org/x/crypto v0.1.0 // indirect
 	golang.org/x/net v0.7.0 // indirect
 	golang.org/x/sys v0.5.0 // indirect
 	golang.org/x/text v0.7.0 // indirect
 	google.golang.org/genproto v0.0.0-20230110181048-76db0878b65f // indirect
 	google.golang.org/protobuf v1.28.1 // indirect
+	lukechampine.com/blake3 v1.2.1 // indirect
 )
