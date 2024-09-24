@@ -12,13 +12,13 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/karlsen-network/karlsend/infrastructure/config"
+	"github.com/karlsen-network/karlsend/v2/infrastructure/config"
 
-	"github.com/karlsen-network/dnsseeder/version"
+	"github.com/karlsen-network/dnsseeder/v2/version"
 	"github.com/pkg/errors"
 
 	"github.com/jessevdk/go-flags"
-	"github.com/karlsen-network/karlsend/util"
+	"github.com/karlsen-network/karlsend/v2/util"
 )
 
 const (

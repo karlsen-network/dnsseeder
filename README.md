@@ -28,7 +28,7 @@ This project is currently under active development and is in Beta state.
 
 ## Requirements
 
-Latest version of [Go](http://golang.org) (currently 1.17)
+Latest version of [Go](http://golang.org) (currently 1.23.1)
 
 ## Getting Started
 
