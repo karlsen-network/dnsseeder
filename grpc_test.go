@@ -7,11 +7,11 @@ import (
 	"os"
 	"testing"
 
-	"github.com/karlsen-network/karlsend/domain/consensus/model/externalapi"
-	"github.com/karlsen-network/karlsend/infrastructure/config"
+	"github.com/karlsen-network/karlsend/v2/domain/consensus/model/externalapi"
+	"github.com/karlsen-network/karlsend/v2/infrastructure/config"
 
-	"github.com/karlsen-network/karlsend/app/appmessage"
-	"github.com/karlsen-network/karlsend/infrastructure/network/dnsseed/pb"
+	"github.com/karlsen-network/karlsend/v2/app/appmessage"
+	"github.com/karlsen-network/karlsend/v2/infrastructure/network/dnsseed/pb"
 	"google.golang.org/grpc"
 )
 
