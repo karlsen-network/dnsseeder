@@ -14,19 +14,19 @@ import (
 	"sync/atomic"
 	"time"
 
-	"github.com/karlsen-network/karlsend/app/protocol/common"
-	"github.com/karlsen-network/karlsend/infrastructure/config"
-	"github.com/karlsen-network/karlsend/infrastructure/network/netadapter/standalone"
+	"github.com/karlsen-network/karlsend/v2/app/protocol/common"
+	"github.com/karlsen-network/karlsend/v2/infrastructure/config"
+	"github.com/karlsen-network/karlsend/v2/infrastructure/network/netadapter/standalone"
 
 	"github.com/pkg/errors"
 
-	"github.com/karlsen-network/dnsseeder/version"
-	"github.com/karlsen-network/karlsend/infrastructure/network/dnsseed"
-	"github.com/karlsen-network/karlsend/util/panics"
-	"github.com/karlsen-network/karlsend/util/profiling"
+	"github.com/karlsen-network/dnsseeder/v2/version"
+	"github.com/karlsen-network/karlsend/v2/infrastructure/network/dnsseed"
+	"github.com/karlsen-network/karlsend/v2/util/panics"
+	"github.com/karlsen-network/karlsend/v2/util/profiling"
 
-	"github.com/karlsen-network/karlsend/app/appmessage"
-	"github.com/karlsen-network/karlsend/infrastructure/os/signal"
+	"github.com/karlsen-network/karlsend/v2/app/appmessage"
+	"github.com/karlsen-network/karlsend/v2/infrastructure/os/signal"
 
 	_ "net/http/pprof"
 )
@@ -205,7 +205,7 @@ func main() {
 
 		// Try to split seeder host and port
 		foundIp, foundPort, err := net.SplitHostPort(cfg.Seeder)
-		if (err == nil) {
+		if err == nil {
 			seederIp = foundIp
 			seederPort, err = strconv.Atoi(foundPort)
 			if err != nil {

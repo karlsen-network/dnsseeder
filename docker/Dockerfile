@@ -1,9 +1,9 @@
 # -- multistage docker build: stage #1: build stage
-FROM golang:1.18-alpine AS build
+FROM golang:1.23.1-alpine AS build
 
-RUN mkdir -p /go/src/github.com/karlsen-network/dnsseeder
+RUN mkdir -p /go/src/github.com/karlsen-network/dnsseeder/v2
 
-WORKDIR /go/src/github.com/karlsen-network/dnsseeder
+WORKDIR /go/src/github.com/karlsen-network/dnsseeder/v2
 
 RUN apk add --no-cache curl git openssh binutils gcc musl-dev
 
@@ -41,7 +41,7 @@ WORKDIR /app
 
 RUN apk add --no-cache tini
 
-COPY --from=build /go/src/github.com/karlsen-network/dnsseeder/ /app/
+COPY --from=build /go/src/github.com/karlsen-network/dnsseeder/v2/ /app/
 
 ENTRYPOINT ["/sbin/tini", "--"]
 CMD ["/app/dnsseeder"]
