@@ -6,6 +6,7 @@ package main
 
 import (
 	"fmt"
+	"github.com/karlsen-network/dnsseeder/v2/checkversion"
 	"github.com/karlsen-network/dnsseeder/v2/netadapter"
 	"github.com/karlsen-network/karlsend/v2/app/protocol/common"
 	"net"
@@ -148,6 +149,12 @@ func pollPeer(netAdapter *netadapter.DnsseedNetAdapter, addr *appmessage.NetAddr
 	}
 	defer routes.Disconnect()
 
+	// Abort before collecting peers for nodes below minimum protocol
+	if ActiveConfig().MinProtoVer > 0 && msgVersion.ProtocolVersion < uint32(ActiveConfig().MinProtoVer) {
+		return errors.Errorf("Peer %s (%s) protocol version %d is below minimum: %d",
+			peerAddress, msgVersion.UserAgent, msgVersion.ProtocolVersion, ActiveConfig().MinProtoVer)
+	}
+
 	msgRequestAddresses := appmessage.NewMsgRequestAddresses(true, nil)
 	err = routes.OutgoingRoute.Enqueue(msgRequestAddresses)
 	if err != nil {
@@ -164,8 +171,16 @@ func pollPeer(netAdapter *netadapter.DnsseedNetAdapter, addr *appmessage.NetAddr
 	log.Infof("Peer %s (%s) sent %d addresses, %d new",
 		peerAddress, msgVersion.UserAgent, len(msgAddresses.AddressList), added)
 
-	amgr.Good(addr, &msgVersion.UserAgent, nil)
+	// Abort after collecting peers for nodes below minimum user agent version
+	if ActiveConfig().MinUaVer != "" {
+		err = checkversion.CheckVersion(ActiveConfig().MinUaVer, msgVersion.UserAgent)
+		if err != nil {
+			return errors.Wrapf(err, "Peer %s version %s doesn't satisfy minimum: %s",
+				peerAddress, msgVersion.UserAgent, ActiveConfig().MinUaVer)
+		}
+	}
 
+	amgr.Good(addr, &msgVersion.UserAgent, nil)
 	return nil
 }
 
