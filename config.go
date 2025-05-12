@@ -14,7 +14,7 @@ import (
 
 	"github.com/karlsen-network/karlsend/v2/infrastructure/config"
 
-	"github.com/karlsen-network/dnsseeder/v2/version"
+	"github.com/karlsen-network/dnsseeder/v3/version"
 	"github.com/pkg/errors"
 
 	"github.com/jessevdk/go-flags"
@@ -28,6 +28,7 @@ const (
 	defaultListenPort     = "5354"
 	defaultGrpcListenPort = "3737"
 	defaultLogLevel       = "info"
+	defaultThreads        = 8
 )
 
 var (
@@ -55,8 +56,11 @@ type ConfigFlags struct {
 	Seeder      string `short:"s" long:"default-seeder" description:"IP address of a working node, optionally with a port specifier"`
 	Profile     string `long:"profile" description:"Enable HTTP profiling on given port -- NOTE port must be between 1024 and 65536"`
 	GRPCListen  string `long:"grpclisten" description:"Listen gRPC requests on address:port"`
+	MinProtoVer uint8  `short:"v" long:"minprotocolversion" description:"Minimum protocol version for nodes."`
+	MinUaVer    string `long:"minuseragentversion" description:"Minimum user agent version for nodes. Prefer minprotocolversion if possible."`
 	NoLogFiles  bool   `long:"nologfiles" description:"Disable logging to file"`
 	LogLevel    string `long:"loglevel" description:"Loglevel for stdout (console). Default: info"`
+	Threads     uint8  `long:"threads" description:"Number of threads to use for polling."`
 	config.NetworkFlags
 }
 
@@ -104,6 +108,7 @@ func loadConfig() (*ConfigFlags, error) {
 		Listen:     normalizeAddress("localhost", defaultListenPort),
 		GRPCListen: normalizeAddress("localhost", defaultGrpcListenPort),
 		LogLevel:   defaultLogLevel,
+		Threads:    defaultThreads,
 	}
 
 	preCfg := activeConfig
@@ -195,6 +200,13 @@ func loadConfig() (*ConfigFlags, error) {
 	}
 
 	initLog(activeConfig.NoLogFiles, activeConfig.LogLevel, appLogFile, appErrLogFile)
+
+	if activeConfig.Threads < 1 || activeConfig.Threads > 32 {
+		str := "threads must be between 1 and 32"
+		err := errors.Errorf(str)
+		fmt.Fprintln(os.Stderr, err)
+		return nil, err
+	}
 
 	return activeConfig, nil
 }

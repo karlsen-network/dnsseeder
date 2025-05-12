@@ -1,7 +1,5 @@
 # DNSSeeder
 
-**This project is currently under active development and is in Beta
-state.**
 
 [![ISC License](http://img.shields.io/badge/license-ISC-blue.svg)](https://choosealicense.com/licenses/isc/)
 [![GoDoc](https://img.shields.io/badge/godoc-reference-blue.svg)](http://godoc.org/github.com/karlsen-network/dnsseeder)
@@ -23,8 +21,6 @@ When DNSSeeder is queried for node information, it responds with details
 of a random selection of the reliable nodes it knows about.
 
 It is written in Go (golang).
-
-This project is currently under active development and is in Beta state.
 
 ## Requirements
 
