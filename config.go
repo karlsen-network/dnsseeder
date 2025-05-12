@@ -28,6 +28,7 @@ const (
 	defaultListenPort     = "5354"
 	defaultGrpcListenPort = "3737"
 	defaultLogLevel       = "info"
+	defaultThreads        = 8
 )
 
 var (
@@ -57,6 +58,7 @@ type ConfigFlags struct {
 	GRPCListen  string `long:"grpclisten" description:"Listen gRPC requests on address:port"`
 	NoLogFiles  bool   `long:"nologfiles" description:"Disable logging to file"`
 	LogLevel    string `long:"loglevel" description:"Loglevel for stdout (console). Default: info"`
+	Threads     uint8  `long:"threads" description:"Number of threads to use for polling."`
 	config.NetworkFlags
 }
 
@@ -104,6 +106,7 @@ func loadConfig() (*ConfigFlags, error) {
 		Listen:     normalizeAddress("localhost", defaultListenPort),
 		GRPCListen: normalizeAddress("localhost", defaultGrpcListenPort),
 		LogLevel:   defaultLogLevel,
+		Threads:    defaultThreads,
 	}
 
 	preCfg := activeConfig
@@ -195,6 +198,13 @@ func loadConfig() (*ConfigFlags, error) {
 	}
 
 	initLog(activeConfig.NoLogFiles, activeConfig.LogLevel, appLogFile, appErrLogFile)
+
+	if activeConfig.Threads < 1 || activeConfig.Threads > 32 {
+		str := "threads must be between 1 and 32"
+		err := errors.Errorf(str)
+		fmt.Fprintln(os.Stderr, err)
+		return nil, err
+	}
 
 	return activeConfig, nil
 }
