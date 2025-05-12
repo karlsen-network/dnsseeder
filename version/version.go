@@ -9,13 +9,13 @@ import (
 const validCharacters = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz-"
 
 const (
-	appMajor uint = 2
-	appMinor uint = 1
+	appMajor uint = 3
+	appMinor uint = 0
 	appPatch uint = 0
 )
 
 // appBuild is defined as a variable so it can be overridden during the build
-// process with '-ldflags "-X github.com/karlsen-network/dnsseeder/v2/version.appBuild=foo"' if needed.
+// process with '-ldflags "-X github.com/karlsen-network/dnsseeder/v3/version.appBuild=foo"' if needed.
 // It MUST only contain characters from validCharacters.
 var appBuild string
 

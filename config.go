@@ -14,7 +14,7 @@ import (
 
 	"github.com/karlsen-network/karlsend/v2/infrastructure/config"
 
-	"github.com/karlsen-network/dnsseeder/v2/version"
+	"github.com/karlsen-network/dnsseeder/v3/version"
 	"github.com/pkg/errors"
 
 	"github.com/jessevdk/go-flags"

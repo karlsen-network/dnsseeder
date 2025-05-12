@@ -20,7 +20,7 @@ import (
 	"github.com/karlsen-network/karlsend/v2/infrastructure/config"
 	"github.com/pkg/errors"
 
-	"github.com/karlsen-network/dnsseeder/v2/version"
+	"github.com/karlsen-network/dnsseeder/v3/version"
 	"github.com/karlsen-network/karlsend/v2/infrastructure/network/dnsseed"
 	"github.com/karlsen-network/karlsend/v2/util/panics"
 	"github.com/karlsen-network/karlsend/v2/util/profiling"

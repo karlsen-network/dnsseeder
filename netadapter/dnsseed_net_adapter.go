@@ -2,7 +2,7 @@ package netadapter
 
 import (
 	"fmt"
-	"github.com/karlsen-network/dnsseeder/v2/version"
+	"github.com/karlsen-network/dnsseeder/v3/version"
 	"sync"
 
 	"github.com/karlsen-network/karlsend/v2/app/protocol/common"
